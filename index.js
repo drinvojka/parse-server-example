@@ -10,7 +10,7 @@ var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
-
+var pushConfig = {};
 if (process.env.GCM_SENDER_ID && process.env.GCM_API_KEY) {
    pushConfig['android'] = { 
    senderId: process.env.GCM_SENDER_ID || '',
