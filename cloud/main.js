@@ -28,9 +28,9 @@ Parse.Cloud.define('pingReply', function(request, response) {
   response.success('success');
 });
 
-Parse.Cloud.define('hello', function(req, res) {
+Parse.Cloud.define('hellothere', function(req, res) {
 Parse.Push.send({
-  channels: ['test-channel'],
+  channels: ['abcd'],
   data: {
     alert: 'Test',
     badge: 1,
