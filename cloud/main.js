@@ -3,11 +3,15 @@ Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
 });
 
-Parse.Cloud.define('pingReply', function(request, response) {
+Parse.Cloud.define('userJoinRequest', function(request, response) {
   var params = request.params;
   var customData = params.customData;
+  var requestUser = params.user;
 
   if (!customData) {
+    response.error("Missing customData!")
+  }
+  if (!requestUser) {
     response.error("Missing customData!")
   }
 
@@ -18,7 +22,7 @@ Parse.Cloud.define('pingReply', function(request, response) {
   Parse.Push.send({
   where: query,
   // Parse.Push requires a dictionary, not a string.
-  data: {"alert": "The Giants scored!"},
+  data: {"alert": user.get("username") + " requested to join your match !" },
   }, { success: function() {
      console.log("#### PUSH OK");
   }, error: function(error) {
@@ -28,21 +32,10 @@ Parse.Cloud.define('pingReply', function(request, response) {
   response.success('success');
 });
 
-Parse.Cloud.define('hellothere', function(req, res) {
-Parse.Push.send({
-  channels: ['abcd'],
-  data: {
-    alert: 'Test',
-    badge: 1,
-    sound: 'default'
+Parse.Cloud.beforeSave(Parse.User, function(request, response) {
+  if (!request.object.get("email")) {
+    response.error("email is required for signup");
+  } else {
+    response.success();
   }
-}, {
-  success: function() {
-    console.log('##### PUSH OK');
-  },
-  error: function(error) {
-    console.log('##### PUSH ERROR');
-  },
-  useMasterKey: true
-});
 });
