@@ -4,14 +4,17 @@ Parse.Cloud.define('hello', function(req, res) {
 });
 
 Parse.Cloud.define('userJoinRequest', function(request, response) {
+	
   var params = request.params;
   var customData = params.customData;
-  var requestUser = params.user;
+  var requestUserId = params.user;
+  var userQuery = new Parse.Query(Parse.User);
+    var user = userQuery.equalTo("objectId", requestUserId);
 
   if (!customData) {
     response.error("Missing customData!")
   }
-  if (!requestUser) {
+  if (!requestUserId) {
     response.error("Missing customData!")
   }
 
