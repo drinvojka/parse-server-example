@@ -24,7 +24,7 @@ Parse.Cloud.define('userJoinRequest', function(request, response) {
   Parse.Push.send({
   where: query,
   // Parse.Push requires a dictionary, not a string.
-  data: {"alert":" You have a new request to join your match !" },
+  data: {"alert": requestUser + " requested to join your match !" },
   }, { success: function() {
      console.log("#### PUSH OK");
   }, error: function(error) {
