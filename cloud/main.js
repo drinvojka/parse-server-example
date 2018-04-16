@@ -13,9 +13,7 @@ Parse.Cloud.define('userJoinRequest', function(request, response) {
   if (!customData) {
     response.error("Missing customData!")
   }
-  if (!requestUserId) {
-    response.error("Missing UserName!")
-  }
+
 
   var sender = JSON.parse(customData).sender;
   var query = new Parse.Query(Parse.Installation);
