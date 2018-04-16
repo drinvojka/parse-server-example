@@ -7,15 +7,14 @@ Parse.Cloud.define('userJoinRequest', function(request, response) {
 	
   var params = request.params;
   var customData = params.customData;
-  var requestUserId = params.user;
-  var userQuery = new Parse.Query(Parse.User);
-    var user = userQuery.equalTo("objectId", requestUserId);
+  var requestUser = params.user;
+
 
   if (!customData) {
     response.error("Missing customData!")
   }
   if (!requestUserId) {
-    response.error("Missing customData!")
+    response.error("Missing UserName!")
   }
 
   var sender = JSON.parse(customData).sender;
@@ -25,7 +24,7 @@ Parse.Cloud.define('userJoinRequest', function(request, response) {
   Parse.Push.send({
   where: query,
   // Parse.Push requires a dictionary, not a string.
-  data: {"alert": user['username'] + " requested to join your match !" },
+  data: {"alert": user + " requested to join your match !" },
   }, { success: function() {
      console.log("#### PUSH OK");
   }, error: function(error) {
