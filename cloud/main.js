@@ -7,7 +7,7 @@ Parse.Cloud.define('userJoinRequest', function(request, response) {
 	
   var params = request.params;
   var customData = params.customData;
-  var requestUser = params.user;
+  var requestUser = params.username;
 
 
   if (!customData) {
