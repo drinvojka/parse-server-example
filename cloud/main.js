@@ -62,7 +62,7 @@ Parse.Cloud.define('requestAccepted', function(request, response) {
   response.success('success');
 });
 
-Parse.Cloud.define('requestAccepted', function(request, response) {
+Parse.Cloud.define('requestRejected', function(request, response) {
 	
   var params = request.params;
   var customData = params.customData;
