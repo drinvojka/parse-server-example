@@ -34,8 +34,8 @@ Parse.Cloud.define('userJoinRequest', function(request, response) {
 
 Parse.Cloud.define("getServerTime", function(request, response) {
 	
-    var dateToday = new Date();
-    response.success(dateToday.toDateString());
+    var dateToday =  new Date().toLocaleString();
+    response.success(dateToday);
 });
 Parse.Cloud.define('requestAccepted', function(request, response) {
 	
