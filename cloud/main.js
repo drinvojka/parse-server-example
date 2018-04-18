@@ -32,7 +32,11 @@ Parse.Cloud.define('userJoinRequest', function(request, response) {
   response.success('success');
 });
 
-
+Parse.Cloud.define("getServerTime", function(request, response) {
+	
+    var dateToday = new Date();
+    response.success(dateToday.toDateString());
+});
 Parse.Cloud.define('requestAccepted', function(request, response) {
 	
   var params = request.params;
@@ -61,8 +65,8 @@ Parse.Cloud.define('requestAccepted', function(request, response) {
 
   response.success('success');
 });
-
 Parse.Cloud.define('requestRejected', function(request, response) {
+	
 	
   var params = request.params;
   var customData = params.customData;
