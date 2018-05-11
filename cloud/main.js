@@ -1,10 +1,10 @@
-Parse.Cloud.beforeSave(ClassConstants.Item.TYPE, function(request, response) {
+Parse.Cloud.beforeSave('Match', function(request, response) {
 
     if(!request.object.isNew()) {
         // Retrieve the relationship information in json string format. 
         // RELATION_QUEUE here is simply a string "queue"
-		   console.log(" ******* OBJECT LOG ******** " + request.object.op("AddRelation"));
-        var relQueueJsonStr = JSON.stringify(request.object.op(ClassConstants.Item.RELATION_QUEUE));
+		 
+        var relQueueJsonStr = JSON.stringify(request.object.op("joinedUsers"));
 		console.log("LOG " + relQueueJsonStr);
         if( relQueue !== undefined ) {
             var relQueue = JSON.parse(relQueueJsonStr);
