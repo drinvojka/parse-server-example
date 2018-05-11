@@ -3,7 +3,8 @@ Parse.Cloud.beforeSave('Match', function(request, response) {
     if(!request.object.isNew()) {
         // Retrieve the relationship information in json string format. 
         // RELATION_QUEUE here is simply a string "queue"
-        var relQueueJsonStr = request.object.op("AddRelation");
+		   console.log(" ******* OBJECT LOG ******** " + request.object);
+        var relQueueJsonStr = JSON.stringify(request.object.op("queue"));
 		console.log("LOG " + relQueueJsonStr);
         if( relQueue !== undefined ) {
             var relQueue = JSON.parse(relQueueJsonStr);
@@ -13,7 +14,7 @@ Parse.Cloud.beforeSave('Match', function(request, response) {
             var operation = relQueue.__op;
             if (operation == "AddRelation"){
                 console.log("Relation queue is being added");
-                console.log(request.object);
+             
 				
                 response.success();
             } else {
