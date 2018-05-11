@@ -1,4 +1,30 @@
+Parse.Cloud.define('decrementPlayersLeft', function(request, response) {
+	
+  var params = request.params;
+  var customData = params.matchId;
 
+
+
+  if (!customData) {
+    response.error("Missing customData!")
+  }
+  else
+  {
+	 const query = new Parse.Query("Match");
+     query.get(customData)
+    .then(function(match) {
+      match.increment("playersLeft",-1);
+      match.save();
+	  response.success("success")
+    })
+    .catch(function(error) {
+      console.error("Got an error " + error.code + " : " + error.message);
+    });
+ 
+  }
+	   
+
+});
 Parse.Cloud.define('hello', function(req, res) {
   res.success('Hi');
 });
