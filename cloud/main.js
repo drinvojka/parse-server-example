@@ -14,6 +14,7 @@ Parse.Cloud.beforeSave('Match', function(request, response) {
             if (operation == "AddRelation"){
                 console.log("Relation queue is being added");
                 request.object.decrement("playersLeft");
+				request.object.save();
                 response.success();
             } else {
             // Relation is being removed
