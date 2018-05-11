@@ -1,4 +1,4 @@
-Parse.Cloud.beforeSave('Match', function(request, response) {
+Parse.Cloud.beforeSave("Match", function(request, response) {
 
     if(!request.object.isNew()) {
         // Retrieve the relationship information in json string format. 
@@ -6,7 +6,7 @@ Parse.Cloud.beforeSave('Match', function(request, response) {
 		 
         var relQueueJsonStr = JSON.stringify(request.object.op("joinedUsers"));
 		console.log("LOG " + relQueueJsonStr);
-        if( relQueue !== undefined ) {
+        if( relQueueJsonStr !== undefined ) {
             var relQueue = JSON.parse(relQueueJsonStr);
             // Retrieve the operation being performed to this existing object.
             // The value will be "AddRelation" if a the relation "queue" is  
@@ -14,8 +14,8 @@ Parse.Cloud.beforeSave('Match', function(request, response) {
             var operation = relQueue.__op;
             if (operation == "AddRelation"){
                 console.log("Relation queue is being added");
-             
-				
+                request.object.decrement("playersLeft");
+				request.object.save();
                 response.success();
             } else {
             // Relation is being removed
