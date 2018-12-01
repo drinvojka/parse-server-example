@@ -12,11 +12,12 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
-var pushConfig = {};
+var OneSignalPushAdapter = require('parse-server-onesignal-push-adapter');
+var oneSignalPushAdapter = new OneSignalPushAdapter({
+  oneSignalAppId:"b0f63fda-a431-4678-b146-17d40fef1528",
+  oneSignalApiKey:"ZjhlNTBmNzctMzAzYi00YzQ4LTkwYmQtZDc2ZDhjNTA5MTFh"
+});
 
-if (process.env.FCM_API_KEY) {
-    pushConfig['android'] = { apiKey: process.env.FCM_API_KEY || ''};
-}
 
 
 var api = new ParseServer({
@@ -28,7 +29,9 @@ var api = new ParseServer({
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   },
-  push: pushConfig
+   push: {
+    adapter: oneSignalPushAdapter
+  }
 
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
