@@ -3,11 +3,7 @@
 
 var express = require('express');
 var ParseServer = require('parse-server').ParseServer;
-var OneSignalPushAdapter = require("parse-server-onesignal-push-adapter");
-var oneSignalPushAdapter = new OneSignalPushAdapter({
-	oneSignalAppId: 'b0f63fda-a431-4678-b146-17d40fef1528',
-	oneSignalApiKey: 'ZjhlNTBmNzctMzAzYi00YzQ4LTkwYmQtZDc2ZDhjNTA5MTFh',
-});
+
 var path = require('path');
 
 var databaseUri = process.env.DATABASE_URI || process.env.MONGODB_URI;
@@ -16,7 +12,11 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
+var pushConfig = {};
 
+if (process.env.FCM_API_KEY) {
+    pushConfig['android'] = { apiKey: process.env.FCM_API_KEY || ''};
+}
 
 
 var api = new ParseServer({
@@ -28,9 +28,7 @@ var api = new ParseServer({
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   },
-  push: {
-		adapter: oneSignalPushAdapter,
-	}
+  push: pushConfig
 
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
