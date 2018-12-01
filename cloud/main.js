@@ -89,22 +89,6 @@ Parse.Cloud.define('requestAccepted', function(request, response) {
 
   response.success('success');
 });
-Parse.Cloud.define('requestRejected', function(request, response) {
-	
-	
-  var params = request.params;
-  var customData = params.customData;
-  var hostUser = params.username;
-
-
-  if (!customData) {
-    response.error("Missing customData!")
-  }
-
-
-  var sender = JSON.parse(customData).sender;
-  var query = new Parse.Query(Parse.Installation);
-  query.equalTo("installationId", sender);
 
  Parse.Push.send({
 	  channels: [ "All" ],
