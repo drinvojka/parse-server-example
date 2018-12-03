@@ -12,12 +12,11 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
-var OneSignalPushAdapter = require('parse-server-onesignal-push-adapter');
-var oneSignalPushAdapter = new OneSignalPushAdapter({
-  oneSignalAppId:"b0f63fda-a431-4678-b146-17d40fef1528",
-  oneSignalApiKey:"ZjhlNTBmNzctMzAzYi00YzQ4LTkwYmQtZDc2ZDhjNTA5MTFh"
+var PushwooshPushAdapter = require('pushwoosh-parse-adapter');
+var pushwooshPushAdapter = new PushwooshPushAdapter({
+  applicationCode: 'B79F5-3015B',
+  apiAccessKey: 'UuYUvamEYW1xMCrAbyQKucnyIiBQyiv9HlZlPRjObircueK3FGjHdOzONBRsqOoJSV5dKVL1Yby8zo1Xf7Wn'
 });
-
 
 
 var api = new ParseServer({
@@ -29,8 +28,8 @@ var api = new ParseServer({
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   },
-   push: {
-    adapter: oneSignalPushAdapter
+  push: {
+    adapter: pushwooshPushAdapter
   }
 
 });
