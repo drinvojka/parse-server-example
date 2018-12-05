@@ -12,12 +12,10 @@ if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
 }
 
-var PushwooshPushAdapter = require('pushwoosh-parse-adapter');
-var pushwooshPushAdapter = new PushwooshPushAdapter({
-  applicationCode: 'B79F5-3015B',
-  apiAccessKey: 'UuYUvamEYW1xMCrAbyQKucnyIiBQyiv9HlZlPRjObircueK3FGjHdOzONBRsqOoJSV5dKVL1Yby8zo1Xf7Wn'
-});
-
+if (process.env.FCM_API_KEY) {
+   pushConfig['android'] = { 
+   apiKey: process.env.FCM_API_KEY || ''};
+}
 
 var api = new ParseServer({
   databaseURI: databaseUri || 'mongodb://localhost:27017/dev',
@@ -28,9 +26,7 @@ var api = new ParseServer({
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   },
-  push: {
-    adapter: pushwooshPushAdapter
-  }
+    push: pushConfig
 
 });
 // Client-keys like the javascript key or the .NET key are not necessary with parse-server
