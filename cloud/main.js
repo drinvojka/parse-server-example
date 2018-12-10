@@ -71,15 +71,12 @@ Parse.Cloud.define("iosPushTest", function(request, response) {
 });
 
 //Push Notification for join requests
-Parse.Cloud.beforeSave("JoinRequest", function(request) {
+Parse.Cloud.afterSave("JoinRequest", function(request) {
  console.log("### Cloud Job - Join Request afterSave started !");
  var query = new Parse.Query("Match");
  var match = query.get(request.object.get("match").id);
- var requestUser = request.object.get("requestUser");
  var hostUser = match.createdBy;
- console.log(match + " " + requestUser + "" +hostUser )
-
-
+ console.log("User - " + hostUser.Name);
   var pushQuery = new Parse.Query(Parse.Installation);
       pushQuery.equalTo('user', hostUser);
         Parse.Push.send({
