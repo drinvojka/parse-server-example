@@ -76,13 +76,13 @@ Parse.Cloud.afterSave("JoinRequest", function(request) {
  var query = new Parse.Query("Match");
  var match = query.get(request.object.get("match").id);
  var hostUser = match.createdBy;
- console.log("User - " + hostUser.username);
+ var name = hostUser.getUsername();
   var pushQuery = new Parse.Query(Parse.Installation);
       pushQuery.equalTo('user', hostUser);
         Parse.Push.send({
             where: pushQuery, // Set our Installation query
             data: {
-              alert: requestUser.username + " asked to join your match !"
+              alert: name + " asked to join your match !"
              }
             }, {
       success: function() {
