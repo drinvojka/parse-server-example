@@ -82,7 +82,7 @@ Parse.Cloud.afterSave("JoinRequest", function(request) {
         Parse.Push.send({
             where: pushQuery, // Set our Installation query
             data: {
-              alert: name + " asked to join your match !"
+              alert: "Someone asked to join your match !"
              }
             }, {
       success: function() {
