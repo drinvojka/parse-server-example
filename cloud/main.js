@@ -76,6 +76,7 @@ Parse.Cloud.afterSave("JoinRequest", function(request) {
  var match = query.get(request.object.get("match").id);
  var requestUser = request.object.get("requestUser");
  var hostUser = match.get("createdBy");
+ console.log(match + " " + requestUser + "" +hostUser )
 
 
   var pushQuery = new Parse.Query(Parse.Installation);
@@ -87,10 +88,10 @@ Parse.Cloud.afterSave("JoinRequest", function(request) {
              }
             }, {
       success: function() {
-      // Push was successful
+      console.log("#### PUSH OK");
           },
       error: function(error) {
         throw "Got an error " + error.code + " : " + error.message;
           }
-            });
+            , useMasterKey: true});
 });
