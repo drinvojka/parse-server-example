@@ -76,7 +76,7 @@ Parse.Cloud.beforeSave("JoinRequest", function(request) {
  var query = new Parse.Query("Match");
  var match = query.get(request.object.get("match").id);
  var requestUser = request.object.get("requestUser");
- var hostUser = match.get("createdBy");
+ var hostUser = match.object.get("createdBy");
  console.log(match + " " + requestUser + "" +hostUser )
 
 
