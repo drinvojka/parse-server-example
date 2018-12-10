@@ -72,6 +72,7 @@ Parse.Cloud.define("iosPushTest", function(request, response) {
 
 //Push Notification for join requests
 Parse.Cloud.afterSave("JoinRequest", function(request) {
+ console.log("### Cloud Job - Join Request afterSave started !");
  var query = new Parse.Query("Match");
  var match = query.get(request.object.get("match").id);
  var requestUser = request.object.get("requestUser");
