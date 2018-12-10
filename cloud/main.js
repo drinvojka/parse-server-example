@@ -69,3 +69,28 @@ Parse.Cloud.define("iosPushTest", function(request, response) {
 
   response.success('success');
 });
+
+//Push Notification for join requests
+Parse.Cloud.afterSave("JoinRequest", function(request) {
+ var query = new Parse.Query("Match");
+ var match = query.get(request.object.get("match").id);
+ var requestUser = request.object.get("requestUser");
+ var hostUser = match.get("createdBy");
+
+
+  var pushQuery = new Parse.Query(Parse.Installation);
+      pushQuery.equalTo('user', hostUser);
+        Parse.Push.send({
+            where: pushQuery, // Set our Installation query
+            data: {
+              alert: requestUser.Name + " asked to join your match !"
+             }
+            }, {
+      success: function() {
+      // Push was successful
+          },
+      error: function(error) {
+        throw "Got an error " + error.code + " : " + error.message;
+          }
+            });
+});
