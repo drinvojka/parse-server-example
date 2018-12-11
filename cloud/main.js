@@ -74,7 +74,7 @@ Parse.Cloud.define("iosPushTest", function(request, response) {
 Parse.Cloud.afterSave("JoinRequest", function(request) {
  console.log("### Cloud Job - Join Request afterSave started !");
  var query = new Parse.Query("Match");
- var match = query.get(request.object.get("match"));
+ var match = query.get(request.object.get("match")).include("createdBy");
  var hostUser = match.createdBy;
  var userquery = new Parse.Query(Parse.User);
  userquery.equalTo('objectId', hostUser);
