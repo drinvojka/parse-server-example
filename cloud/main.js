@@ -77,7 +77,7 @@ Parse.Cloud.afterSave("JoinRequest", function(request) {
  var match = query.get(request.object.get("match"));
  var hostUser = match.createdBy;
   var pushQuery = new Parse.Query(Parse.Installation);
-      pushQuery.equalTo('user', hostUser);
+      pushQuery.equalTo('user', hostUser.id);
         Parse.Push.send({
             where: pushQuery, // Set our Installation query
             data: {
