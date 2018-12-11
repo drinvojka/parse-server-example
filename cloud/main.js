@@ -75,10 +75,8 @@ Parse.Cloud.afterSave("JoinRequest", function(request) {
  console.log("### Cloud Job - Join Request afterSave started !");
  var query = new Parse.Query("Match");
  var match = query.get(request.object.get("match"));
- var userQuery = new Parse.Query(Parse.User);
- userQuery.equalTo("objectId",match.createdBy.get("objectId"));
   var pushQuery = new Parse.Query(Parse.Installation);
-      pushQuery.matchesQuery('user', userQuery);
+      pushQuery.equalTo('user', match.createdBy);
         Parse.Push.send({
             where: pushQuery, // Set our Installation query
             data: {
